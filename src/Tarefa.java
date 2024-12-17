@@ -1,9 +1,9 @@
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Tarefa {
     private int id;
-    private Date prazo;
+    private LocalDateTime prazo;
     private String nome;
     private Categoria categoria;
-
 }

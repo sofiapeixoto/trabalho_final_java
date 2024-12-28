@@ -1,7 +1,7 @@
 public class utilizador {
     private String nome;
 
-    public String setNome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 

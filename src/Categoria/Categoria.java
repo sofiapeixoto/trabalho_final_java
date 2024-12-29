@@ -1,22 +1,19 @@
+package Categoria;
+
 public class Categoria {
-    private int idcategoria;
+    private int idCategoria;
     private String nome;
 
-    public Categoria(String nome) {
-        this.nome = nome;
-    }
-
-    public Categoria(int id, String nome) {
-        this.idcategoria = id;
+    public Categoria(int idCategoria, String nome) {
         this.nome = nome;
     }
 
     public int getId() {
-        return idcategoria;
+        return idCategoria;
     }
 
-    public void setId(int id) {
-        this.idcategoria = id;
+    public void setId(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     //region Getters e setters

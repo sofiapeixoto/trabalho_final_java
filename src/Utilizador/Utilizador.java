@@ -1,24 +1,28 @@
-import java.io.*;
+package Utilizador;
+
+import Categoria.Categoria;
+import Tarefa.Tarefa;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.Objects;
 
-public class TarefaCategoria {
-    private int idTarefa;
-    private int idCategoria;
+public class Utilizador {
 
-
-
-    private static final String ficheiroTarefas = "src/tarefas.txt";
     private static final String ficheiroCategorias = "src/categorias.txt";
+    private static final String ficheiroTarefas = "src/tarefas.txt";
 
     private List<Categoria> categorias;
     private List<Tarefa> tarefas;
 
-    public TarefaCategoria() {
-
+    public Utilizador() {
         carregarCategorias();
     }
 
@@ -26,18 +30,18 @@ public class TarefaCategoria {
         return categorias;
     }
 
-    public void adicionarCategoria(String nome, int idCategoria ) {
+    public void adicionarCategoria(int idCategoria, String nome) {
 
-        boolean idCategoriaExiste = idCategoriaExistente(idCategoria);
+        boolean nomeExiste = nomeExistenteString(nome);
 
-        if (idCategoriaExiste) {
-            System.err.println("A categoria: " + nome + " já existe no sistema, não pode ser adiconada.");
+        if (nomeExiste) {
+            System.err.println("O nome " + nome + " já existe no sistema.");
             return;
         }
 
         int id = obterIdProximaCategoria();
 
-        Categoria novaCategoria = new Categoria(id, nome);
+        Categoria novaCategoria= new Categoria(id, nome);
 
         guardarCategoriaFicheiro(novaCategoria);
 
@@ -55,6 +59,14 @@ public class TarefaCategoria {
 
         escreverCategorias(categorias);
     }
+
+    public void apagarCategoria()  throws IOException {
+        listarCategorias();
+        System.out.println("Selecione uma categoria para apagar (através do id): ");
+
+    }
+
+
 
     public boolean idCategoriaExistente(int idIntroduzido) {
         carregarCategorias();
@@ -97,13 +109,13 @@ public class TarefaCategoria {
         }
     }
 
-    public Boolean idCategoriaExistenteInt(int novoIdCategoria) {
+    public Boolean nomeExistenteString(String novoNome) {
 
         for (Categoria categoria : categorias) {
 
-            int idCategoriaExistente = categoria.getId();
+            String nomeCategoriaExistente = categoria.getNome();
 
-            if (Objects.equals(novoIdCategoria, idCategoriaExistente)) {
+            if (Objects.equals(novoNome, nomeCategoriaExistente)) {
                 return true;
             }
         }
@@ -111,13 +123,13 @@ public class TarefaCategoria {
         return false;
     }
 
-    public Boolean idCategoriaExistenteCategoria(Categoria categoriaAtualizada) {
+    public Boolean nomeExistenteCategoria(Categoria categoriaAtualizada) {
         carregarCategorias();
 
-        for (Categoria idCategoriaExistente : categorias) {
-            if (categoriaAtualizada.getId() != idCategoriaExistente.getId()) {
+        for (Categoria categoriaExistente : categorias) {
+            if (categoriaAtualizada.getId() != categoriaExistente.getId()) {
 
-                if (Objects.equals(categoriaAtualizada.getId(), idCategoriaExistente.getId())) {
+                if (Objects.equals(categoriaAtualizada.getNome(), categoriaExistente.getNome())) {
                     return true;
                 }
             }
@@ -140,7 +152,7 @@ public class TarefaCategoria {
                     int id = Integer.parseInt(dados[0].trim());
                     String nome = dados[1].trim();
 
-                    Categoria categoria = new Categoria(idCategoria, nome);
+                    Categoria categoria = new Categoria(id, nome);
                     categorias.add(categoria);
                 } else {
                     System.out.println("Linha inválida no ficheiro: " + linha);
@@ -168,7 +180,7 @@ public class TarefaCategoria {
                     LocalDateTime prazo = LocalDateTime.parse(dados[2].trim());
                     String categoria= dados[3].trim();
 
-                    Tarefa tarefa = new Tarefa(idTarefa, nome, prazo, categoria);
+                    Tarefa tarefa = new Tarefa(id, nome, prazo, categoria);
                     tarefas.add(tarefa);
                 } else {
                     System.out.println("Linha inválida no ficheiro: " + linha);
@@ -183,9 +195,8 @@ public class TarefaCategoria {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroCategorias, true))) {
 
             String linha = categoria.getId() + "," + categoria.getNome();
-
-            bw.newLine();
             bw.write(linha);
+            bw.newLine();
 
             System.out.println("Categoria adicionada com sucesso!");
         } catch (IOException e) {
@@ -199,8 +210,8 @@ public class TarefaCategoria {
             for (Categoria categoria : categorias) {
                 String linha = categoria.getId() + "," + categoria.getNome();
 
-                bw.newLine();
                 bw.write(linha);
+                bw.newLine();
 
             }
         } catch (IOException e) {

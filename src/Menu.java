@@ -38,10 +38,10 @@ public class Menu {
 
             while (true) {
                 System.out.println("*******************");
-                System.out.println("*** Menu Categoria ***");
+                System.out.println("*** Menu Categoria.Categoria ***");
                 System.out.println("1 - Listar Categorias");
-                System.out.println("2 - Adicionar Categoria");
-                System.out.println("3 - Alterar dados Categoria");
+                System.out.println("2 - Adicionar Categoria.Categoria");
+                System.out.println("3 - Alterar dados Categoria.Categoria");
                 System.out.println("4 - Apagar Categorias");
                 System.out.println("5 - Voltar");
 
@@ -63,11 +63,11 @@ public class Menu {
 
             while (true) {
                 System.out.println("*******************");
-                System.out.println("*** Menu Tarefa ***");
+                System.out.println("*** Menu Tarefa.Tarefa ***");
                 System.out.println("1 - Listar Tarefas");
-                System.out.println("2 - Adicionar Tarefa");
-                System.out.println("3 - Alterar dados Tarefa");
-                System.out.println("4 - Apagar Tarefa");
+                System.out.println("2 - Adicionar Tarefa.Tarefa");
+                System.out.println("3 - Alterar dados Tarefa.Tarefa");
+                System.out.println("4 - Apagar Tarefa.Tarefa");
                 System.out.println("5 - Voltar");
 
                 int opcao = solicitarOpcao();

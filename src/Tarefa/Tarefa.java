@@ -1,3 +1,7 @@
+package Tarefa;
+
+import Categoria.Categoria;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,7 +17,8 @@ public class Tarefa {
 
 
 
-    public Tarefa(String nome, Categoria categoria, LocalDateTime prazo) {
+    public Tarefa(int idTarefa,String nome, Categoria categoria, LocalDateTime prazo) {
+        this.idTarefa = idTarefa;
         this.nome = nome;
         this.categoria = categoria;
         this.prazo = prazo;
@@ -22,11 +27,6 @@ public class Tarefa {
 
     }
 
-    public Tarefa(int id, String nome, Categoria categoria) {
-        this.idTarefa = id;
-        this.nome = nome;
-        this.categorias = new ArrayList<>();
-    }
 
     public Tarefa(int idTarefa, String nome, LocalDateTime prazo, String categoria) {
     }
@@ -35,8 +35,8 @@ public class Tarefa {
         return idTarefa;
     }
 
-    public void setId(int id) {
-        this.idTarefa = id;
+    public void setId(int idTarefa) {
+        this.idTarefa = idTarefa;
     }
 
     //region Getters e setters

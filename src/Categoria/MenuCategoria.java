@@ -60,9 +60,20 @@ public final class MenuCategoria {
             utilizador.listarCategorias();
         }
 
-        public void apagarCategoria() {
+        public void apagarCategoria()throws IOException{
             listarCategorias();
             System.out.println("Selecione uma categoria para apagar (através do id): ");
+            int idCategoria = solicitarOpcao();
+
+            boolean idCategoriaExiste = utilizador.idCategoriaExistente(idCategoria);
+
+            if (idCategoriaExiste) {
+                // Chama o método de remoção da classe Utilizador
+                utilizador.apagarCategoria(idCategoria);
+                System.out.println("Categoria com id " + idCategoria + " removida com sucesso.");
+            } else {
+                System.err.println("Categoria não encontrada com o ID: " + idCategoria);
+            }
         }
 
         private static int solicitarOpcao() {

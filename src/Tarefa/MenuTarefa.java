@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
         public MenuTarefa() throws IOException {
         }
 
-        public void adicionarTarefa() {
+        public void adicionarTarefas() {
 
             System.out.println("************************");
             System.out.println("*** Adicionar Tarefa ***");
@@ -47,7 +47,7 @@ import java.time.format.DateTimeFormatter;
 
         }
 
-        public void atualizarTarefa() throws IOException {
+        public void alterarTarefa() throws IOException {
 
             listarTarefas();
             System.out.println("Selecione uma Tarefa (através do id): ");
@@ -88,7 +88,7 @@ import java.time.format.DateTimeFormatter;
             utilizador.listarTarefas();
         }
 
-        public void apagarTarefas()throws IOException{
+        public void apagarTarefa()throws IOException{
             listarTarefas();
             System.out.println("Selecione uma tarefa para apagar (através do id): ");
             int idTarefa = solicitarOpcao();

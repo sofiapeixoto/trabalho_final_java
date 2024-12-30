@@ -56,15 +56,19 @@ public class Tarefa {
     public void setPrazo(LocalDateTime prazo) {
         this.prazo = prazo;
     }
+
     public Categoria getCategoria() {
         return categoria;
     }
+
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
     public void adicionarCategoria(Categoria categoria) {
         categorias.add(categoria);
     }
+
     public String formatarPrazo() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         return prazo.format(formatter);

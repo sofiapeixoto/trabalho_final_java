@@ -14,17 +14,13 @@ import java.util.Scanner;
             while (true) {
 
                 System.out.println("*******************");
-                System.out.println("*** Menu ***");
-                System.out.println("1 - Gerir Categorias");
-                System.out.println("2 - Gerir Tarefas");
-                System.out.println("3 - Gerir Utilizadores");
+                System.out.println("*** Menu do Gerenciador de Tarefas  ***");
+                System.out.println("1-Utilizadores");
 
                 int opcao = solicitarOpcao();
 
                 switch (opcao) {
-                    case 1 -> mostrarMenuCategoria();
-                    case 2 -> mostrarMenuTarefa();
-                    case 3 -> mostrarMenuUtilizador();
+                    case 1 -> mostrarMenuUtilizador();
                     default -> System.out.println("Opção inválida. Tente novamente.");
                 }
             }
@@ -79,16 +75,38 @@ import java.util.Scanner;
         }
 
 
+        private void mostrarMenuUtilizador() throws IOException {
+            MenuUtilizador menuUtilizador = new MenuUtilizador();
 
+            while (true) {
+                System.out.println("*******************");
+                System.out.println("*** Menu Utilizador ***");
+                System.out.println("1 - Listar e Selecionar Utilizadores");
+                System.out.println("2 - Adicionar Utilizadores");
+                System.out.println("3 - Alterar dados do Utilizador");
+                System.out.println("4 - Apagar Utilizador");
+                System.out.println("5 - Voltar");
 
-        private static int solicitarOpcao() {
-            System.out.print("Selecione uma opção: ");
+                int opcao = solicitarOpcao();
 
-            while (!scanner.hasNextInt()) {
-                System.out.println("Entrada inválida. Digite um número.");
-                scanner.next();
+                switch (opcao) {
+                    case 1 -> menuUtilizador.listarSelecionarUtilizador();
+                    case 2 -> menuUtilizador.adicionarUtilizador();
+                    case 3 -> menuUtilizador.alterarUtilizador();
+                    case 4 -> menuUtilizador.apagarUtilizador();
+                    case 5 -> mostrarMenuInicial();
+                    default -> System.out.println("Opção inválida. Tente novamente.");
+                }
             }
 
-            return scanner.nextInt();
+            private static int solicitarOpcao() {
+
+                while (!scanner.hasNextInt()) {
+                    System.out.println("Entrada inválida. Digite um número.");
+                    scanner.next();
+                }
+
+                return scanner.nextInt();
+            }
         }
     }

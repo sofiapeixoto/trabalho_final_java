@@ -15,12 +15,22 @@ import java.io.FileWriter;
 import java.util.Objects;
 
 public class Utilizador {
+private String nomeUtilizador;
+
+    public String getNomeUtilizador() {
+        return nomeUtilizador;
+    }
+    public void setNomeUtilizador(String nomeUtilizador) {
+        this.nomeUtilizador = nomeUtilizador;
+    }
+
 
     private static final String ficheiroCategorias = "src/categorias.txt";
     private static final String ficheiroTarefas = "src/tarefas.txt";
-
+    private static final String ficheiroUtilizadores = "src/utilizadores.txt";
     private List<Categoria> categorias;
     private List<Tarefa> tarefas;
+    private List<Utilizador> utilizadores;
 
 
     public List<Categoria> getCategorias() {
@@ -117,7 +127,7 @@ public class Utilizador {
     }
 
 
-    public Boolean nomeExistenteString(String novoNome) {
+    public Boolean nomeCategoriaExistenteString(String novoNome) {
 
         for (Categoria categoria : categorias) {
 
@@ -207,13 +217,17 @@ public class Utilizador {
         guardarCategoriaFicheiro(categorias);
     }
 
-    public void limparFicheiro(ficheiroCategorias) throws IOException {
+    public void limparFicheiro(){ //ver com o sor isto
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroCategorias))) {
 
         } catch (Exception e) {
             System.err.println("Erro ao apagar ficheiro");
         }
     }
+
+
+
     public Utilizador() {
         carregarTarefas();
     }
@@ -221,7 +235,6 @@ public class Utilizador {
     public List<Tarefa> getTarefas() {
         return tarefas;
     }
-
 
 
     public void listarTarefas() {
@@ -405,7 +418,187 @@ public class Utilizador {
         guardarTarefaFicheiro(tarefas);
     }
 
-    public void limparFicheiro(String fileName) throws IOException {
+    public void limparFicheiro() { //ver com o sor isto
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroTarefas))) {
+
+        } catch (Exception e) {
+            System.err.println("Erro ao apagar ficheiro");
+        }
+    }
+
+
+
+
+    public List<Utilizador> getUtilizadores() {
+        return utilizadores;
+    }
+
+
+    public void listarSelecionarUtilizador() {
+
+        carregarUtilizadores();
+
+        for (Utilizador utilizador : utilizadores) {
+            System.out.println(utilizador.toString());
+        }
+    }
+
+    private void carregarUtilizadores() {
+
+        utilizadores = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(ficheiroUtilizadores))) {
+
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
+
+                if (dados.length == 5) {
+                    String nomeUtilizador = dados[0].trim();
+
+
+                    Utilizador utilizador = new Utilizador();
+                    utilizadores.add(utilizador);
+                } else {
+                    System.out.println("Linha inválida no ficheiro: " + linha);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao ler o ficheiro: " + e.getMessage());
+        }
+    }
+
+    public void adicionarUtilizador(String nomeUtilizador) {
+
+        boolean nomeUtilizadorExiste = nomeUtilizadorExistenteString(nomeUtilizador);
+
+        if (nomeUtilizadorExiste) {
+            System.err.println("O nome " + nomeUtilizador + " já existe no sistema.");
+            return;
+        }
+
+        Utilizador novoUtilizador= new Utilizador();
+
+        guardarUtilizadorFicheiro(novoUtilizador);
+
+    }
+
+    public void alterarUtilizador(Utilizador utilizadorAlterado) throws IOException {
+        carregarUtilizadores();
+
+        for (Utilizador utilizador : utilizadores) {
+
+            if (utilizador.getNomeUtilizador() == utilizadorAlterado.getNomeUtilizador()) {
+               return;
+            }
+        }
+
+        escreverUtilizador(utilizadores);
+    }
+
+    public void apagarUtilizador(String nomeUtilizadorApagar)  throws IOException {
+        carregarUtilizadores();
+        Utilizador utilizadorApagar = null;
+        // Procura pelo nome
+        for (Utilizador utilizador : utilizadores) {
+            if (utilizador.getNomeUtilizador() == nomeUtilizadorApagar) {
+                utilizadorApagar = utilizador;
+                break;
+            }
+        }
+
+        // Se encontrar o nome, remove
+        if (utilizadorApagar != null) {
+            utilizadores.remove(utilizadorApagar);
+            System.out.println("Utilizador removido com sucesso.");
+            // Atualiza o arquivo com os nomes restantes
+            escreverUtilizador(utilizadores);
+        } else {
+            System.out.println("Utilizador não encontrado com o nome: " + nomeUtilizadorApagar);
+        }
+
+    }
+
+
+
+    public boolean nomeUtilizadorExistente(String nomeUtilizador) {
+        carregarUtilizadores();
+
+        for (Utilizador utilizador : utilizadores) {
+            if (utilizador.getNomeUtilizador() == nomeUtilizador) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public Boolean nomeUtilizadorExistenteString(String novoNomeUtilizador) {
+
+        for (Utilizador utilizador : utilizadores) {
+
+            String nomeUtilizadorExistente = utilizador.getNomeUtilizador();
+
+            if (Objects.equals(novoNomeUtilizador,nomeUtilizadorExistente)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Boolean nomeUtilizadorExistente(Utilizador utilizadorAlterado) {
+        carregarUtilizadores();
+
+        for (Utilizador utilizadorExistente : utilizadores) {
+            if (utilizadorAlterado.getNomeUtilizador() != utilizadorExistente.getNomeUtilizador()) {
+
+                if (Objects.equals(utilizadorAlterado.getNomeUtilizador(), utilizadorExistente.getNomeUtilizador())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    public static void guardarUtilizadorFicheiro(Utilizador utilizador) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroUtilizadores, true))) {
+
+            String linha = utilizador.getNomeUtilizador();
+            bw.write(linha);
+            bw.newLine();
+
+            System.out.println("Utilizador adicionado com sucesso!");
+        } catch (IOException e) {
+            System.err.println("Erro ao escrever no ficheiro: " + e.getMessage());
+        }
+    }
+
+    public static void guardarUtilizadoresFicheiro(List<Utilizador> utilizadores) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroUtilizadores, true))) {
+
+            for (Utilizador utilizador : utilizadores) {
+                String linha = utilizador.getNomeUtilizador() ;
+
+                bw.write(linha);
+                bw.newLine();
+
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao escrever no ficheiro: " + e.getMessage());
+        }
+    }
+
+
+    public void escreverUtilizador(List<Utilizador> utilizadores) throws IOException {
+        limparFicheiro(ficheiroUtilizadores);
+        guardarUtilizadoresFicheiro(utilizadores);
+    }
+
+    public void limparFicheiro(String fileName) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
 
         } catch (Exception e) {
@@ -414,4 +607,5 @@ public class Utilizador {
     }
 
 }
+
 

@@ -24,6 +24,12 @@ private String nomeUtilizador;
         this.nomeUtilizador = nomeUtilizador;
     }
 
+    public Utilizador() {
+        this.nomeUtilizador = ""; // Inicializa com uma string vazia.
+        this.categorias = new ArrayList<>();
+        this.tarefas = new ArrayList<>();
+        this.utilizadores = new ArrayList<>();
+    }
 
     private static final String ficheiroCategorias = "src/categorias.txt";
     private static final String ficheiroTarefas = "src/tarefas.txt";
@@ -31,6 +37,10 @@ private String nomeUtilizador;
     private List<Categoria> categorias;
     private List<Tarefa> tarefas;
     private List<Utilizador> utilizadores;
+
+    public String toString() {
+        return nomeUtilizador;  // Retorna o nome do utilizador como representação do objeto
+    }
 
 
     public List<Categoria> getCategorias() {
@@ -84,7 +94,7 @@ private String nomeUtilizador;
         if (categoriaParaApagar != null) {
             categorias.remove(categoriaParaApagar);
             System.out.println("Categoria removida com sucesso.");
-            // Atualiza o arquivo com as categorias restantes
+            // Atualiza o arquivo com as categorias.txt restantes
             escreverCategorias(categorias);
         } else {
             System.out.println("Categoria não encontrada com o ID: " + idCategoriaParaApagar);
@@ -213,23 +223,16 @@ private String nomeUtilizador;
 
 
     public void escreverCategorias(List<Categoria> categorias) throws IOException {
-        limparFicheiro(ficheiroCategorias);
+        limparFicheiroCategoria(ficheiroCategorias);
         guardarCategoriaFicheiro(categorias);
     }
 
-    public void limparFicheiro(){ //ver com o sor isto
-
+    public void limparFicheiroCategoria(String ficheiroCategorias) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroCategorias))) {
-
-        } catch (Exception e) {
-            System.err.println("Erro ao apagar ficheiro");
+            // Apenas abrir o arquivo em modo de escrita limpa o conteúdo.
+        } catch (IOException e) {
+            System.err.println("Erro ao apagar conteúdo do ficheiro " + ficheiroCategorias + ": " + e.getMessage());
         }
-    }
-
-
-
-    public Utilizador() {
-        carregarTarefas();
     }
 
     public List<Tarefa> getTarefas() {
@@ -321,7 +324,7 @@ private String nomeUtilizador;
         if (tarefaParaApagar != null) {
             tarefas.remove(tarefaParaApagar);
             System.out.println("Tarefa removida com sucesso.");
-            // Atualiza o arquivo com as categorias restantes
+            // Atualiza o arquivo com as categorias.txt restantes
             escreverTarefas(tarefas);
         } else {
             System.out.println("Tarefa não encontrada com o ID: " + idTarefaParaApagar);
@@ -414,15 +417,15 @@ private String nomeUtilizador;
 
 
     public void escreverTarefas(List<Tarefa> tarefas) throws IOException {
-        limparFicheiro(ficheiroTarefas);
+        limparFicheiroTarefas(ficheiroTarefas);
         guardarTarefaFicheiro(tarefas);
     }
 
-    public void limparFicheiro() { //ver com o sor isto
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroTarefas))) {
-
-        } catch (Exception e) {
-            System.err.println("Erro ao apagar ficheiro");
+    public void limparFicheiroTarefas(String ficheiroTarefas) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroTarefas, false))) {
+            // Apenas abrir o arquivo em modo de escrita limpa o conteúdo.
+        } catch (IOException e) {
+            System.err.println("Erro ao apagar conteúdo do ficheiro " + ficheiroTarefas + ": " + e.getMessage());
         }
     }
 
@@ -444,7 +447,6 @@ private String nomeUtilizador;
     }
 
     private void carregarUtilizadores() {
-
         utilizadores = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(ficheiroUtilizadores))) {
@@ -453,12 +455,12 @@ private String nomeUtilizador;
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(",");
 
-                if (dados.length == 5) {
+                if (dados.length == 1) {  // Supõe-se que cada linha tem apenas o nome do utilizador
                     String nomeUtilizador = dados[0].trim();
 
-
-                    Utilizador utilizador = new Utilizador();
-                    utilizadores.add(utilizador);
+                    Utilizador novoUtilizador = new Utilizador();
+                    novoUtilizador.setNomeUtilizador(nomeUtilizador);  // Defina o nome do utilizador
+                    utilizadores.add(novoUtilizador);
                 } else {
                     System.out.println("Linha inválida no ficheiro: " + linha);
                 }
@@ -488,7 +490,7 @@ private String nomeUtilizador;
 
         for (Utilizador utilizador : utilizadores) {
 
-            if (utilizador.getNomeUtilizador() == utilizadorAlterado.getNomeUtilizador()) {
+            if (utilizador.getNomeUtilizador().equals(utilizadorAlterado.getNomeUtilizador())) {
                return;
             }
         }
@@ -501,7 +503,7 @@ private String nomeUtilizador;
         Utilizador utilizadorApagar = null;
         // Procura pelo nome
         for (Utilizador utilizador : utilizadores) {
-            if (utilizador.getNomeUtilizador() == nomeUtilizadorApagar) {
+            if (utilizador.getNomeUtilizador().equals(nomeUtilizadorApagar)) {
                 utilizadorApagar = utilizador;
                 break;
             }
@@ -525,7 +527,7 @@ private String nomeUtilizador;
         carregarUtilizadores();
 
         for (Utilizador utilizador : utilizadores) {
-            if (utilizador.getNomeUtilizador() == nomeUtilizador) {
+            if (utilizador.getNomeUtilizador().equals(nomeUtilizador)){
                 return true;
             }
         }
@@ -577,32 +579,34 @@ private String nomeUtilizador;
         }
     }
 
-    public static void guardarUtilizadoresFicheiro(List<Utilizador> utilizadores) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroUtilizadores, true))) {
-
+    public void guardarUtilizadoresFicheiro() {
+        if (nomeUtilizador == null || nomeUtilizador.trim().isEmpty()) {
+            System.err.println("Erro: O nome do utilizador não pode ser nulo ou vazio.");
+            return;
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ficheiroUtilizadores, false))) {  // false para sobrescrever o arquivo
             for (Utilizador utilizador : utilizadores) {
-                String linha = utilizador.getNomeUtilizador() ;
-
-                bw.write(linha);
-                bw.newLine();
-
+                writer.write(utilizador.getNomeUtilizador());
+                writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Erro ao escrever no ficheiro: " + e.getMessage());
+            System.err.println("Erro ao guardar utilizador no ficheiro: " + e.getMessage());
         }
     }
 
 
+
+
     public void escreverUtilizador(List<Utilizador> utilizadores) throws IOException {
-        limparFicheiro(ficheiroUtilizadores);
-        guardarUtilizadoresFicheiro(utilizadores);
+        limparFicheiroUtilizadores(ficheiroUtilizadores);
+        guardarUtilizadoresFicheiro();
     }
 
-    public void limparFicheiro(String fileName) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
-
-        } catch (Exception e) {
-            System.err.println("Erro ao apagar ficheiro");
+    public void limparFicheiroUtilizadores(String ficheiroUtilizadores) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroUtilizadores))) {
+            // Apenas abrir o arquivo em modo de escrita limpa o conteúdo.
+        } catch (IOException e) {
+            System.err.println("Erro ao apagar conteúdo do ficheiro " + ficheiroUtilizadores + ": " + e.getMessage());
         }
     }
 

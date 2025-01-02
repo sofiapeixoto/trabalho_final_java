@@ -15,8 +15,8 @@ public class TarefaCategoria {
 
 
 
-    private static final String ficheiroTarefas = "src/tarefas.txt";
-    private static final String ficheiroCategorias = "src/categorias.txt";
+    private static final String ficheiroTarefas = "src/tarefas.txt.txt";
+    private static final String ficheiroCategorias = "src/categorias.txt.txt";
 
     private List<Categoria> categorias;
     private List<Tarefa> tarefas;

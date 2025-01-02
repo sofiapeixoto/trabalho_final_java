@@ -51,6 +51,8 @@ public class MenuUtilizador {
 
 
             Utilizador utilizadorAlterado = new Utilizador();
+            utilizadorAlterado.setNomeUtilizador(nome);
+
 
             boolean utilizadorExiste= utilizador.nomeUtilizadorExistente(utilizadorAlterado);
 
@@ -60,11 +62,11 @@ public class MenuUtilizador {
             utilizador.alterarUtilizador(utilizadorAlterado);
         }
 
-        public void listarSelecionarUtilizador() throws IOException {
+        public void listarSelecionarUtilizador()  {
 
             System.out.println("************************");
             System.out.println("*** Utilizador: ***");
-            listarSelecionarUtilizador();
+            utilizador.listarSelecionarUtilizador();
             System.out.println("Selecione um utilizador (através do nome): ");
             String nomeUtilizador = lerString();
 

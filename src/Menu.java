@@ -98,6 +98,7 @@ import java.util.Scanner;
                     default -> System.out.println("Opção inválida. Tente novamente.");
                 }
             }
+        }
 
             private static int solicitarOpcao() {
 
@@ -109,4 +110,4 @@ import java.util.Scanner;
                 return scanner.nextInt();
             }
         }
-    }
+

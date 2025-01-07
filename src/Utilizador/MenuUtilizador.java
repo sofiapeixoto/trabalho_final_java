@@ -75,7 +75,7 @@ public class MenuUtilizador {
         }
 
         public void apagarUtilizador()throws IOException{
-            listarSelecionarUtilizador();
+            utilizador.listarSelecionarUtilizador();
             System.out.println("Selecione um utilizador para apagar (através do nome): ");
             String nomeUtilizador = lerString();
 

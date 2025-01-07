@@ -35,7 +35,7 @@ public class MenuUtilizador {
 
         public void alterarUtilizador() throws IOException {
 
-            listarSelecionarUtilizador();
+            utilizador.listarSelecionarUtilizador();
             System.out.println("Selecione um Utilizador (através do nome): ");
 
             String nomeUtilizador= lerString();

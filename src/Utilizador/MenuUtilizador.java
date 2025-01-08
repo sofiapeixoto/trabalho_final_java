@@ -62,17 +62,17 @@ public class MenuUtilizador {
             utilizador.alterarUtilizador(utilizadorAlterado);
         }
 
-        public void listarSelecionarUtilizador()  {
+        //public void listarSelecionarUtilizador()  {
 
-            System.out.println("************************");
-            System.out.println("*** Utilizador: ***");
-            utilizador.listarSelecionarUtilizador();
-            System.out.println("Selecione um utilizador (através do nome): ");
-            String nomeUtilizador = lerString();
+            //System.out.println("************************");
+            //System.out.println("*** Utilizador: ***");
+            //utilizador.listarSelecionarUtilizador();
+            //System.out.println("Selecione um utilizador (através do nome): ");
+            //String nomeUtilizador = lerString();
 
-            boolean nomeUtilizadorExiste= utilizador.nomeUtilizadorExistente(nomeUtilizador);
+            //boolean nomeUtilizadorExiste= utilizador.nomeUtilizadorExistente(nomeUtilizador);
 
-        }
+        //}
 
         public void apagarUtilizador()throws IOException{
             utilizador.listarSelecionarUtilizador();

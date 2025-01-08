@@ -1,7 +1,7 @@
 package Categoria;
 import java.io.IOException;
 import java.util.Scanner;
-import Tarefa.TarefaCategoria;
+
 import Utilizador.Utilizador;
 
 

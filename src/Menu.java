@@ -5,7 +5,7 @@ import Utilizador.MenuUtilizador;
 import java.io.IOException;
 import java.util.Scanner;
 
-    public final class Menu {
+    public class Menu {
 
         // objeto que permite ler valores introduzidos pelo utilizador
         private static final Scanner scanner = new Scanner(System.in);
@@ -81,7 +81,7 @@ import java.util.Scanner;
             while (true) {
                 System.out.println("*******************");
                 System.out.println("*** Menu Utilizador ***");
-                System.out.println("1 - Listar e Selecionar Utilizadores");
+                System.out.println("1 - Gerir as tarefas do Utilizador (tem que adicionar o utilizador caso ainda nao tenha adicionado!!!)");
                 System.out.println("2 - Adicionar Utilizadores");
                 System.out.println("3 - Alterar dados do Utilizador");
                 System.out.println("4 - Apagar Utilizador");
@@ -90,11 +90,31 @@ import java.util.Scanner;
                 int opcao = solicitarOpcao();
 
                 switch (opcao) {
-                    case 1 -> menuUtilizador.listarSelecionarUtilizador();
+                    case 1 -> mostrarMenuTarefaCategoria();
                     case 2 -> menuUtilizador.adicionarUtilizador();
                     case 3 -> menuUtilizador.alterarUtilizador();
                     case 4 -> menuUtilizador.apagarUtilizador();
                     case 5 -> mostrarMenuInicial();
+                    default -> System.out.println("Opção inválida. Tente novamente.");
+                }
+            }
+        }
+
+        private void mostrarMenuTarefaCategoria() throws IOException {
+
+            while (true) {
+                System.out.println("*******************");
+                System.out.println("*** Menu Gerir Tarefas e Categorias do Utilizador ***");
+                System.out.println("1 - Gerir Tarefas");
+                System.out.println("2 - Gerir Categorias");
+                System.out.println("3 - Voltar");
+
+                int opcao = solicitarOpcao();
+
+                switch (opcao) {
+                    case 1 -> mostrarMenuTarefa();
+                    case 2 -> mostrarMenuCategoria();
+                    case 3 -> mostrarMenuInicial();
                     default -> System.out.println("Opção inválida. Tente novamente.");
                 }
             }

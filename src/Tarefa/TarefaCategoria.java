@@ -1,6 +1,7 @@
 package Tarefa;
 
 import Categoria.Categoria;
+import Utilizador.Utilizador;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -17,9 +18,11 @@ public class TarefaCategoria {
 
     private static final String ficheiroTarefas = "src/tarefas.txt.txt";
     private static final String ficheiroCategorias = "src/categorias.txt.txt";
+    private static final String ficheiroUtilizadores = "src/utilizadores.txt.txt";
 
     private List<Categoria> categorias;
     private List<Tarefa> tarefas;
+    private List<Utilizador> utilizadores;
 
     public TarefaCategoria() {
 
@@ -158,6 +161,7 @@ public class TarefaCategoria {
     private void carregarTarefas() {
 
         tarefas = new ArrayList<>();
+        utilizadores= new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(ficheiroTarefas))) {
 
@@ -171,8 +175,9 @@ public class TarefaCategoria {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     LocalDateTime prazo = LocalDateTime.parse(dados[2].trim());
                     String categoria= dados[3].trim();
+                    String nomeUtilizador= dados[4].trim();
 
-                    Tarefa tarefa = new Tarefa(idTarefa, nome, prazo, categoria);
+                    Tarefa tarefa = new Tarefa(idTarefa, nome, prazo, categoria, nomeUtilizador);
                     tarefas.add(tarefa);
                 } else {
                     System.out.println("Linha inválida no ficheiro: " + linha);
@@ -226,4 +231,3 @@ public class TarefaCategoria {
         }
     }
 }
-

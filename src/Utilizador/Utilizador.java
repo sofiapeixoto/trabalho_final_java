@@ -3,6 +3,7 @@ package Utilizador;
 import Categoria.Categoria;
 import Tarefa.Tarefa;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -265,8 +266,9 @@ private String nomeUtilizador;
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     LocalDateTime prazo = LocalDateTime.parse(dados[2].trim());
                     String categoria= dados[3].trim();
+                    String nomeUtilizador= dados[4].trim();
 
-                    Tarefa tarefa = new Tarefa(id, nome, prazo, categoria);
+                    Tarefa tarefa = new Tarefa(id, nome, prazo, categoria, nomeUtilizador);
                     tarefas.add(tarefa);
                 } else {
                     System.out.println("Linha inválida no ficheiro: " + linha);
@@ -277,7 +279,7 @@ private String nomeUtilizador;
         }
     }
 
-    public void adicionarTarefa(int idTarefa, String nome, LocalDateTime prazo, String categoria) {
+    public void adicionarTarefa(int idTarefa, String nome, LocalDateTime prazo, String categoria, String nomeUtilizador) {
 
         boolean nomeExiste = nomeExistenteString(nome);
 
@@ -288,7 +290,7 @@ private String nomeUtilizador;
 
         int id = obterIdProximaTarefa();
 
-        Tarefa novaTarefa= new Tarefa(id, nome, prazo, categoria);
+        Tarefa novaTarefa= new Tarefa(id, nome, prazo, categoria, nomeUtilizador);
 
         guardarTarefaFicheiro(novaTarefa);
 
@@ -577,8 +579,8 @@ private String nomeUtilizador;
                 }
             }
             // Se não houver duplicação, escreve o nome do utilizador no arquivo
-            bw.write(utilizador.getNomeUtilizador());
             bw.newLine();
+            bw.write(utilizador.getNomeUtilizador());
             System.out.println("Utilizador adicionado com sucesso!");
         } catch (IOException e) {
             System.err.println("Erro ao escrever no ficheiro: " + e.getMessage());
@@ -586,20 +588,18 @@ private String nomeUtilizador;
     }
 
 
-    public static void guardarUtilizadoresFicheiro(List<Utilizador> utilizadores) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroUtilizadores, true))) {
-
+    private void guardarUtilizadoresFicheiro(List<Utilizador> utilizadores) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroUtilizadores))) {
             for (Utilizador utilizador : utilizadores) {
-                String linha = utilizador.getNomeUtilizador();
-
-                bw.newLine();
-                bw.write(linha);
-
+                System.out.println("teste" + utilizador.getNomeUtilizador());
+                bw.write(utilizador.getNomeUtilizador());
+                bw.newLine(); // Adiciona uma quebra de linha após cada utilizador
             }
         } catch (IOException e) {
             System.err.println("Erro ao escrever no ficheiro: " + e.getMessage());
         }
     }
+
 
 
 

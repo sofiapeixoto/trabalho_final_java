@@ -109,9 +109,22 @@ import java.time.format.DateTimeFormatter;
             boolean idTarefaExiste = utilizador.idTarefaExistente(idTarefa);
 
             if (idTarefaExiste) {
-                // Chama o método de remoção da classe Utilizador
                 utilizador.apagarTarefa(idTarefa);
                 System.out.println("Tarefa com id " + idTarefa + " removida com sucesso.");
+            } else {
+                System.err.println("Tarefa não encontrada com o ID: " + idTarefa);
+            }
+        }
+
+        public void concluirTarefa()throws IOException{
+            listarTarefas();
+            System.out.println("Selecione uma tarefa para concluir (através do id): ");
+            int idTarefa = solicitarOpcao();
+            boolean idTarefaExiste = utilizador.idTarefaExistente(idTarefa);
+
+            if (idTarefaExiste) {
+                utilizador.concluirTarefa();
+                System.out.println("Tarefa com id " + idTarefa + " concluída com sucesso.");
             } else {
                 System.err.println("Tarefa não encontrada com o ID: " + idTarefa);
             }

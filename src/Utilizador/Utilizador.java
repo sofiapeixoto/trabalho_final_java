@@ -388,6 +388,11 @@ private String nomeUtilizador;
         return false;
     }
 
+    public void concluirTarefa() {
+
+
+    }
+
 
     public static void guardarTarefaFicheiro(Tarefa tarefa) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroTarefas, true))) {
@@ -575,10 +580,9 @@ private String nomeUtilizador;
             while ((linha = br.readLine()) != null) {
                 if (linha.trim().equals(utilizador.getNomeUtilizador())) {
                     System.err.println("O utilizador já existe no sistema.");
-                    return; // Impede duplicação
+                    return;
                 }
             }
-            // Se não houver duplicação, escreve o nome do utilizador no arquivo
             bw.newLine();
             bw.write(utilizador.getNomeUtilizador());
             System.out.println("Utilizador adicionado com sucesso!");
@@ -590,10 +594,13 @@ private String nomeUtilizador;
 
     private void guardarUtilizadoresFicheiro(List<Utilizador> utilizadores) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ficheiroUtilizadores))) {
+            int index = 0;
             for (Utilizador utilizador : utilizadores) {
-                System.out.println("teste" + utilizador.getNomeUtilizador());
+                if(index > 0) {
+                    bw.newLine();
+                }
                 bw.write(utilizador.getNomeUtilizador());
-                bw.newLine(); // Adiciona uma quebra de linha após cada utilizador
+                index++;
             }
         } catch (IOException e) {
             System.err.println("Erro ao escrever no ficheiro: " + e.getMessage());

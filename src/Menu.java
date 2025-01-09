@@ -59,7 +59,8 @@ import java.util.Scanner;
                 System.out.println("2 - Adicionar Tarefa");
                 System.out.println("3 - Alterar dados Tarefa");
                 System.out.println("4 - Apagar Tarefa");
-                System.out.println("5 - Voltar");
+                System.out.println("5 - Concluir Tarefa");
+                System.out.println("6 - Voltar");
 
                 int opcao = solicitarOpcao();
 
@@ -68,7 +69,8 @@ import java.util.Scanner;
                     case 2 -> menuTarefa.adicionarTarefas();
                     case 3 -> menuTarefa.alterarTarefa();
                     case 4 -> menuTarefa.apagarTarefa();
-                    case 5 -> mostrarMenuInicial();
+                    case 5 -> menuTarefa.concluirTarefa();
+                    case 6 -> mostrarMenuInicial();
                     default -> System.out.println("Opção inválida. Tente novamente.");
                 }
             }

@@ -55,7 +55,7 @@ private String nomeUtilizador;
         boolean nomeExiste = nomeExistenteString(nome);
 
         if (nomeExiste) {
-            System.err.println("O nome " + nome + " já existe no sistema.");
+            System.err.println("A categoria " + nome + " já existe no sistema.");
             return;
         }
 
@@ -284,13 +284,13 @@ private String nomeUtilizador;
         boolean nomeExiste = nomeExistenteString(nome);
 
         if (nomeExiste) {
-            System.err.println("O nome " + nome + " já existe no sistema.");
+            System.err.println("A tarefa " + nome + " já existe no sistema.");
             return;
         }
 
         int id = obterIdProximaTarefa();
 
-        Tarefa novaTarefa= new Tarefa(id, nome, prazo, categoria, nomeUtilizador);
+        Tarefa novaTarefa= new Tarefa(id, nome, prazo, categoria, nomeUtilizador, estaConcluido);
 
         guardarTarefaFicheiro(novaTarefa);
 
@@ -481,7 +481,7 @@ private String nomeUtilizador;
         boolean nomeUtilizadorExiste = nomeUtilizadorExistenteString(nomeUtilizador);
 
         if (nomeUtilizadorExiste) {
-            System.err.println("O nome " + nomeUtilizador + " já existe no sistema.");
+            System.err.println("O usernaem " + nomeUtilizador + " já existe no sistema.");
             return;
         }
 
@@ -497,7 +497,7 @@ private String nomeUtilizador;
         for (Utilizador utilizador : utilizadores) {
 
             if (utilizador.getNomeUtilizador().equals(utilizadorAlterado.getNomeUtilizador())) {
-               return;
+               utilizador.setNomeUtilizador(utilizadorAlterado.getNomeUtilizador());
             }
         }
 
@@ -522,7 +522,7 @@ private String nomeUtilizador;
             // Atualiza o arquivo com os nomes restantes
             escreverUtilizador(utilizadores);
         } else {
-            System.out.println("Utilizador não encontrado com o nome: " + nomeUtilizadorApagar);
+            System.out.println("Utilizador não encontrado com o username: " + nomeUtilizadorApagar);
         }
 
     }

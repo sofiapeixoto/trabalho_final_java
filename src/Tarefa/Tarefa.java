@@ -16,10 +16,10 @@ public class Tarefa {
     private Categoria categoria;
     private List<Categoria> categorias;
     private List<Utilizador> nomeUtilizador;
+    private boolean estaConcluida;
 
 
-
-    public Tarefa(int idTarefa,String nome, Categoria categoria, LocalDateTime prazo, Utilizador utilizador) {
+    public Tarefa(int idTarefa,String nome, Categoria categoria, LocalDateTime prazo, Utilizador utilizador,Boolean estaConcluida) {
         this.idTarefa = idTarefa;
         this.nome = nome;
         this.categoria = categoria;
@@ -28,10 +28,11 @@ public class Tarefa {
         this.categorias.add(categoria);
         this.nomeUtilizador= new ArrayList<>();
         this.nomeUtilizador.add(utilizador);
+        this.estaConcluida = false;
     }
 
 
-    public Tarefa(int idTarefa, String nome, LocalDateTime prazo, String categoria, String nomeUtilizador) {
+    public Tarefa(int idTarefa, String nome, LocalDateTime prazo, String categoria, String nomeUtilizador, String descricao) {
     }
 
     public int getId() {
@@ -90,4 +91,5 @@ public class Tarefa {
     public Utilizador getNomeUtilizador() {
         return nomeUtilizador.get(0);
     }
+
 }

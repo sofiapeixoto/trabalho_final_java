@@ -26,43 +26,51 @@ public class MenuUtilizador {
             System.out.println("************************");
             System.out.println("*** Adicionar Utilizador ***");
 
-            System.out.println("Introduza o nome do utilizador: ");
+            System.out.println("Introduza o username do utilizador: ");
             String nomeUtilizador = lerString();
 
             utilizador.adicionarUtilizador(nomeUtilizador);
 
         }
 
-        public void alterarUtilizador() throws IOException {
+    public void alterarUtilizador() throws IOException {
+        utilizador.listarSelecionarUtilizador();
+        System.out.println("Seleciona um utilizador (através do username): ");
+        String nomeUtilizadorAntigo = lerString();
 
-            utilizador.listarSelecionarUtilizador();
-            System.out.println("Selecione um Utilizador (através do nome): ");
+        boolean nomeUtilizadorExiste = utilizador.nomeUtilizadorExistente(nomeUtilizadorAntigo);
 
-            String nomeUtilizador= lerString();
-
-            boolean nomeUtilizadorExiste = utilizador.nomeUtilizadorExistente(nomeUtilizador);
-
-            if (!nomeUtilizadorExiste) {
-                System.err.println("Não foi encontrado nenhum Utilizador com o nome: " +nomeUtilizador);
-            }
-
-            System.out.println("Digite o nome: ");
-            String nome = lerString();
-
-
-            Utilizador utilizadorAlterado = new Utilizador();
-            utilizadorAlterado.setNomeUtilizador(nome);
-
-
-            boolean utilizadorExiste= utilizador.nomeUtilizadorExistente(utilizadorAlterado);
-
-            if (nomeUtilizadorExiste) {
-                System.err.println("Já existe um utilizador com o nome: " + nomeUtilizador);
-            }
-            utilizador.alterarUtilizador(utilizadorAlterado);
+        if (!nomeUtilizadorExiste) {
+            System.err.println("Não foi encontrado nenhum utilizador com o username: " + nomeUtilizadorAntigo);
+            return;
         }
 
-        //public void listarSelecionarUtilizador()  {
+        System.out.println("Digite o novo username: ");
+        String novoNomeUtilizador = lerString();
+
+        boolean novoNomeExiste = utilizador.nomeUtilizadorExistente(novoNomeUtilizador);
+
+        if (novoNomeExiste) {
+            System.err.println("Já existe um utilizador com o username: " + novoNomeUtilizador);
+            return;
+        }
+
+        // A variável u é declarada como do tipo Utilizador. A cada iteração do loop,
+        // ela recebe um dos objetos da lista retornada por utilizador.getUtilizadores().
+
+        for (Utilizador u : utilizador.getUtilizadores()) {
+            if (u.getNomeUtilizador().equals(nomeUtilizadorAntigo)) {
+                u.setNomeUtilizador(novoNomeUtilizador);
+                break;
+            }
+        }
+
+        utilizador.escreverUtilizador(utilizador.getUtilizadores());
+        System.out.println("Username alterado com sucesso!");
+    }
+
+
+    //public void listarSelecionarUtilizador()  {
 
             //System.out.println("************************");
             //System.out.println("*** Utilizador: ***");
@@ -76,17 +84,16 @@ public class MenuUtilizador {
 
         public void apagarUtilizador()throws IOException{
             utilizador.listarSelecionarUtilizador();
-            System.out.println("Selecione um utilizador para apagar (através do nome): ");
+            System.out.println("Selecione um utilizador para apagar (através do username): ");
             String nomeUtilizador = lerString();
 
             boolean nomeUtilizadorExiste = utilizador.nomeUtilizadorExistente(nomeUtilizador);
 
             if (nomeUtilizadorExiste) {
-                // Chama o método de remoção da classe Utilizador
                 utilizador.apagarUtilizador(nomeUtilizador);
-                System.out.println("O utilizador com o nome " + nomeUtilizador + " foi removido com sucesso.");
+                System.out.println("O utilizador com o username " + nomeUtilizador + " foi removido com sucesso.");
             } else {
-                System.err.println("Utilizador não encontrado com o nome: " + nomeUtilizador);
+                System.err.println("Utilizador não encontrado com o username: " + nomeUtilizador);
             }
         }
 

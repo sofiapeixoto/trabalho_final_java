@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
         private final Utilizador utilizador = new Utilizador();
         private static final Scanner scanner = new Scanner(System.in);
 
+        private static final String ficheiroLogin = "src/loginUtilizador.txt";
         public MenuTarefa() throws IOException {
         }
 
@@ -42,10 +43,9 @@ import java.time.format.DateTimeFormatter;
                     break;
                 }
             }
-            System.out.println("Introduza o nome do Utilizador: ");
-            String nomeUtilizador = lerString();
-            nomeUtilizadorExistenteString(nomeUtilizador);
-            utilizador.adicionarTarefa(idTarefa,nome,prazo,nomeCategoria,nomeUtilizador);
+
+
+            utilizador.adicionarTarefa(idTarefa,nome,prazo,nomeCategoria,nomeUtilizador,estaConcluida);
 
         }
         public void nomeUtilizadorExistenteString(String nomeUtilizador) {
@@ -80,11 +80,7 @@ import java.time.format.DateTimeFormatter;
             System.out.println("Digite a categoria da Tarefa: ");
             String nomeCategoria = lerString();
 
-            System.out.println("Digite o nome de Utilizador: ");
-            String nomeUtilizador = lerString();
-            nomeUtilizadorExistenteString(nomeUtilizador);
-
-            Tarefa tarefaAtualizada = new Tarefa(idTarefa, nome, prazo, nomeCategoria,nomeUtilizador);
+            Tarefa tarefaAtualizada = new Tarefa(idTarefa, nome, prazo, nomeCategoria,nomeUtilizador,estaConcluida);
 
             boolean nomeExiste = utilizador.nomeExistenteTarefa(tarefaAtualizada);
             if (nomeExiste) {

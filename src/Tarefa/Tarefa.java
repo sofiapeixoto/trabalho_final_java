@@ -28,11 +28,11 @@ public class Tarefa {
         this.categorias.add(categoria);
         this.nomeUtilizador= new ArrayList<>();
         this.nomeUtilizador.add(utilizador);
-        this.estaConcluida = false;
+        this.estaConcluida = estaConcluida;
     }
 
-
-    public Tarefa(int idTarefa, String nome, LocalDateTime prazo, String categoria, String nomeUtilizador, String descricao) {
+    public String getEstado() {
+        return estaConcluida ? "Concluída" : "Pendente";
     }
 
     public int getId() {
@@ -75,6 +75,13 @@ public class Tarefa {
         this.categoria = categoria;
     }
 
+
+    public void setEstaConcluida(boolean estaConcluida) {
+        this.estaConcluida = estaConcluida;
+    }
+    public boolean getEstaConcluida() {
+        return estaConcluida;
+    }
     public void adicionarCategoria(Categoria categoria) {
 
         categorias.add(categoria);
@@ -86,6 +93,7 @@ public class Tarefa {
     }
 
     public void setNomeUtilizador(Utilizador utilizador) {
+
         this.nomeUtilizador = nomeUtilizador;
     }
     public Utilizador getNomeUtilizador() {

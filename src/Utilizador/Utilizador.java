@@ -61,7 +61,7 @@ private String nomeUtilizador;
 
         int id = obterIdProximaCategoria();
 
-        Categoria novaCategoria= new Categoria(id, nome);
+        Categoria novaCategoria= new Categoria(idCategoria, nome);
 
         guardarCategoriaFicheiro(novaCategoria);
 
@@ -267,8 +267,9 @@ private String nomeUtilizador;
                     LocalDateTime prazo = LocalDateTime.parse(dados[2].trim());
                     String categoria= dados[3].trim();
                     String nomeUtilizador= dados[4].trim();
+                    Boolean estaConcluida = Boolean.parseBoolean(dados[5].trim());
 
-                    Tarefa tarefa = new Tarefa(id, nome, prazo, categoria, nomeUtilizador);
+                    Tarefa tarefa = new Tarefa(id, nome, prazo, categoria, nomeUtilizador,estaConcluida);
                     tarefas.add(tarefa);
                 } else {
                     System.out.println("Linha inválida no ficheiro: " + linha);
@@ -279,7 +280,7 @@ private String nomeUtilizador;
         }
     }
 
-    public void adicionarTarefa(int idTarefa, String nome, LocalDateTime prazo, String categoria, String nomeUtilizador) {
+    public void adicionarTarefa(int idTarefa, String nome, LocalDateTime prazo, String categoria, String nomeUtilizador, boolean estaConcluida) {
 
         boolean nomeExiste = nomeExistenteString(nome);
 
@@ -290,7 +291,7 @@ private String nomeUtilizador;
 
         int id = obterIdProximaTarefa();
 
-        Tarefa novaTarefa= new Tarefa(id, nome, prazo, categoria, nomeUtilizador, estaConcluido);
+        Tarefa novaTarefa= new Tarefa(id, nome, prazo, categoria, nomeUtilizador, estaConcluida);
 
         guardarTarefaFicheiro(novaTarefa);
 
@@ -388,10 +389,15 @@ private String nomeUtilizador;
         return false;
     }
 
-    public void concluirTarefa() {
-
-
+    public void concluirTarefa(int idTarefa) {
+        for (Tarefa tarefa : tarefas) {
+            if (tarefa.getId() == idTarefa) {
+                tarefa.setEstaConcluida(true);
+                break;
+            }
+        }
     }
+
 
 
     public static void guardarTarefaFicheiro(Tarefa tarefa) {
